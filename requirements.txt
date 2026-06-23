@@ -1,0 +1,14 @@
+pandas
+numpy
+scikit-learn
+lightgbm>=3.3
+xgboost
+catboost
+transformers
+torch
+datasets
+yfinance
+matplotlib
+shap
+statsmodels
+pyarrow
