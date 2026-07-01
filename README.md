@@ -1,4 +1,5 @@
-# leakage-audited-financial-sentiment
+# A Leakage-Audited, Regime-Robust Protocol for Evaluating Machine-Learning
+Models on Temporal, Class-Imbalanced Affective Text
 Replication code for "A leakage-audited, regime-robust protocol for evaluating learning models on financial sentiment text" — Neurocomputing (under review)
 # Leakage-audited, regime-robust evaluation of affective-text stock prediction
 
