@@ -1,4 +1,4 @@
-# A Leakage-Audited, Regime-Robust Protocol for Evaluating Machine-Learning Models on Affective Text
+# A Leakage-Audited, Regime-Robust Protocol for Evaluating Stock-Movement Prediction From Affective Text
 
 Code and reproducible pipeline for the paper *"A Leakage-Audited, Regime-Robust
 Protocol for Evaluating Machine-Learning Models on Affective Text"*
