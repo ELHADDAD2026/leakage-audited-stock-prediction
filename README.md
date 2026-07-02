@@ -1,159 +1,95 @@
-# A Leakage-Audited, Regime-Robust Protocol for Evaluating Machine-Learning
-Models on Temporal, Class-Imbalanced Affective Text
-Replication code for "A leakage-audited, regime-robust protocol for evaluating learning models on financial sentiment text" — Neurocomputing (under review)
-# Leakage-audited, regime-robust evaluation of affective-text stock prediction
+# A Leakage-Audited, Regime-Robust Protocol for Evaluating Machine-Learning Models on Affective Text
 
-Code accompanying the paper:
+Code and reproducible pipeline for the paper *"A Leakage-Audited, Regime-Robust
+Protocol for Evaluating Machine-Learning Models on Affective Text"*
+(A. El Haddad, S. Achchab, Y. Lahrichi), submitted to **IEEE Access**.
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20945552.svg)](https://doi.org/10.5281/zenodo.20945552)
+
+## Overview
+
+This project tests whether affective features — FinBERT sentiment, sarcasm, six
+emotion dimensions, and emoji scores — extracted from roughly 3.06 million
+social-media and news messages improve machine-learning prediction of the daily
+and ten-day movement of seven U.S. mega-cap stocks (AAPL, MSFT, NVDA, GOOGL,
+AMZN, META, TSLA).
+
+Under a leakage-audited, regime-stratified evaluation, the apparent gains do
+**not** survive: sentiment co-moves with the market regime rather than
+anticipating it. This repository provides the full evaluation protocol so the
+analysis can be reproduced and reused on other temporal, class-imbalanced
+affective-text problems.
+
+## Method / pipeline
+
+1. **Multi-source data collection** (see *Data sources* below)
+2. **NLP scoring:** FinBERT sentiment, sarcasm, six emotion dimensions, emoji sentiment
+3. **Feature engineering:** 49 features per stock-day (31 technical + 18 NLP), all lagged one day
+4. **Leakage audit** + strict chronological split (train ≤ 2021 / validation 2022 / test 2023)
+5. **Models:** LightGBM, XGBoost, CatBoost, and a bidirectional GRU
+6. **Evaluation:** AUC vs. majority-class baseline, noise placebo, walk-forward
+   re-estimation, ablation, SHAP attribution, Granger causality, abstention curves
+
+## Data sources
+
+Kaggle datasets, FNSPID, Finnhub, Alpha Vantage, a Hugging Face financial-news
+set, and RSS feeds. Price data from Yahoo Finance.
+
+> Raw third-party text data are under their respective providers' licenses and
+> are **not** redistributed here. The derived daily features used in the paper
+> are available from the corresponding author upon reasonable request.
+
+## Reproduce
+
+The full pipeline runs on Kaggle:
+
+- **Kaggle notebook:** `<PASTE YOUR KAGGLE NOTEBOOK URL HERE>`
+
+To run locally (optional):
+
+```bash
+pip install -r requirements.txt
+# then run the notebook cells in order (data collection -> NLP scoring ->
+# features -> leakage audit -> training -> evaluation/robustness)
+```
+
+Requirements: Python 3.10+, and the packages listed in `requirements.txt`.
+
+## Key results
+
+| Test | Result |
+|---|---|
+| Daily direction | No better than chance (AUC ≈ 0.51) |
+| Ten-day direction (best model, 2023 bull) | AUC 0.687 — never beats the majority-class baseline (0.683) |
+| Sentiment lift by regime (10-day) | +2.68% (2021) / **−0.01% (2022 bear)** / +3.37% (2023 bull) |
+| Noise placebo | Lift collapses from +3.37% to +0.58% |
+| Lag structure | \|r\| ≈ 0.18 same-day vs 0.03 next-day → contemporaneous, not predictive |
+| Random vs chronological split | Validation AUC 0.828 vs 0.543 (gap 0.285 = look-ahead leakage) |
+
+**Conclusion:** sentiment follows the market regime; it does not lead it.
 
 ## Citation
 
 If you use this code, please cite:
 
-> El Haddad, A., Achchab, S., & Lahrichi, Y. (2026).
-> *A leakage-audited, regime-robust protocol for evaluating learning models on
-> affective financial text.* Manuscript submitted for publication (Neurocomputing).
-
-This repository contains the full pipeline used to extract affective features
-(FinBERT sentiment, sarcasm, emotions, emoji) from ~3.06 million social-media and
-news messages, combine them with technical indicators, train gradient-boosted
-ensembles (LightGBM, XGBoost, CatBoost) and a BiGRU, and evaluate them under a
-**leakage-audited, regime-robust protocol** for seven U.S. mega-cap stocks
-(AAPL, MSFT, GOOGL, AMZN, META, TSLA, NVDA), 2015–2024.
-
----
-
-## 1. Data sources and licenses
-
-Raw data are **not redistributed** here; they originate from third parties under
-their own licenses and must be obtained from the original providers:
-
-| Source | Content | How to obtain |
-|---|---|---|
-| Yahoo Finance (via `yfinance`) | Daily OHLCV prices | `yfinance` package |
-| FNSPID | Financial news + prices | Public dataset (see provider) |
-| Finnhub | News / market data | API key required (free tier) |
-| Hugging Face datasets | Social-media / news text | `datasets` library |
-
-The **derived daily features** (the modeling table) are available from the
-corresponding author on reasonable request.
-
----
-
-## 2. Environment
-
-```bash
-python >= 3.10
-pip install -r requirements.txt
+```bibtex
+@article{elhaddad2026leakage,
+  author  = {El Haddad, Abdelkhaleq and Achchab, Said and Lahrichi, Younes},
+  title   = {A Leakage-Audited, Regime-Robust Protocol for Evaluating
+             Machine-Learning Models on Affective Text},
+  journal = {IEEE Access},
+  year    = {2026},
+  note    = {To appear},
+  doi     = {10.5281/zenodo.20945552}
+}
 ```
 
-`requirements.txt` (minimum):
+## License
 
-```
-pandas
-numpy
-scikit-learn
-lightgbm>=3.3
-xgboost
-catboost
-transformers
-torch
-datasets
-yfinance
-matplotlib
-shap
-statsmodels
-pyarrow
-```
+Code: MIT (see `LICENSE`). Data: under the original providers' licenses.
 
-A GPU is recommended for the FinBERT (Cell 7) and BiGRU (Cell 13b) steps.
+## Contact
 
----
-
-## 3. Secrets (API keys)
-
-Do **not** hard-code credentials. Set them as environment variables before running:
-
-```bash
-export FINNHUB_KEY="your_key"
-export HF_TOKEN="your_token"   # if needed
-```
-
-The notebook reads them via `os.environ[...]`.
-
----
-
-## 4. How to run (execution order)
-
-The notebook (`notebook.ipynb`) is organized as a linear pipeline. Run the cells
-in order:
-
-| Step | Cell | Produces |
-|---|---|---|
-| Setup | 1, 2 | config + helpers (checkpoint system) |
-| Prices | 4 | market data |
-| Text collection | 5 | raw corpus |
-| Cleaning + sarcasm score | 6 | cleaned text |
-| FinBERT sentiment | 7 | sentiment scores |
-| Sarcasm ML + emotion | 8 | affective features |
-| Daily aggregation | 9 | daily panel |
-| Technical indicators | 10 | technical features |
-| Merge + targets | 11 | merged table |
-| Feature engineering + split | 12 | `08_features.parquet`, train/val/test |
-| Models (trees) | 13 | LightGBM / XGBoost / CatBoost |
-| **Leakage figure** | **13d** | **Figure 10** |
-| Sequential model | 13b | BiGRU |
-| Stacking / ensemble | 13c, 14 | ensemble + backtest |
-| Causal / robustness | 15 | Pearson, Granger, SHAP, ablation, noise placebo |
-| Real-time snapshot | 16 | live prediction figure |
-| Figures | 17 | manuscript figures |
-
-### Checkpoints
-
-The pipeline caches every heavy step as a `.parquet` checkpoint (see Cell 2,
-`ckpt`). If a checkpoint exists, its cell **skips recomputation and reloads it**.
-This lets you reproduce downstream results without re-running the slow steps
-(text collection 5, cleaning 6, FinBERT 7).
-
----
-
-## 5. Reproducing Figure 10 (leakage demonstration)
-
-Figure 10 shows that random (shuffled) validation inflates AUC by **0.285**
-relative to chronological evaluation, for the same model and features.
-
-1. Run **Cells 1–12** (or place the provided `08_features.parquet` checkpoint in
-   the output directory so Cell 12 loads it directly).
-2. Run **Cell 13d**.
-3. Output: `fig5_learning_behavior.png` plus the printed numbers (random vs.
-   chronological validation AUC and the leakage gap).
-
----
-
-## 6. Repository structure
-
-```
-notebook.ipynb        Full pipeline (Cells 1–17)
-requirements.txt      Python dependencies
-README.md             This file
-LICENSE               MIT (code)
-figures/              Generated figures 
-```
-
----
-
-## 7. License
-
-Code is released under the **MIT License** (see `LICENSE`). Data remain under the
-licenses of their original providers (Section 1).
-
----
-
-## 8. Citation
-
-If you use this code, please cite the paper (Section above). BibTeX will be added
-upon publication.
-
-## 9. Contact
-
-Abdelkhaleq EL HADDAD, abdelkhaleq_elhaddad@um5.ac.ma, Issues and questions: please open a GitHub issue.
+Abdelkhaleq El Haddad — abdelkhaleq_elhaddad@um5.ac.ma
+ENSIAS, Mohammed V University, Rabat, Morocco
 
