@@ -74,8 +74,7 @@ If you use this code, please cite:
 ```bibtex
 @article{elhaddad2026leakage,
   author  = {El Haddad, Abdelkhaleq and Achchab, Said and Lahrichi, Younes},
-  title   = {A Leakage-Audited, Regime-Robust Protocol for Evaluating
-             Machine-Learning Models on Affective Text},
+  title   = {A Leakage-Audited, Regime-Robust Protocol for Evaluating Stock-Movement Prediction From Affective Text},
   journal = {IEEE Access},
   year    = {2026},
   note    = {To appear},
