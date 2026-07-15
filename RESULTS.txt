@@ -1,0 +1,48 @@
+
+==================================================================
+RUN  test_year=2023  horizon=1j   n_test=1750  pos_rate=0.549
+------------------------------------------------------------------
+baseline classe majoritaire (acc) = 0.5491
+model_lgb              AUC=0.5110  IC95=[0.4845, 0.5393]  p_perm=0.3932
+model_stack            (skip: AttributeError)
+model_xgb              AUC=0.5033  IC95=[0.4760, 0.5315]  p_perm=0.8044
+per-ticker AUC (ensemble, ret_1d) : AAPL=0.389  TSLA=0.397  MSFT=0.406  NVDA=0.410  GOOGL=0.419  AMZN=0.445  META=0.489
+
+==================================================================
+RUN  test_year=2023  horizon=20j   n_test=1750  pos_rate=0.733
+------------------------------------------------------------------
+baseline classe majoritaire (acc) = 0.7331
+model_lgb              AUC=0.5916  IC95=[0.5613, 0.6224]  p_perm=0.0020
+model_stack            (skip: AttributeError)
+model_xgb              AUC=0.6331  IC95=[0.6044, 0.6621]  p_perm=0.0020
+per-ticker AUC (ensemble, ret_1d) : MSFT=0.446  META=0.447  TSLA=0.463  GOOGL=0.494  AAPL=0.495  NVDA=0.499  AMZN=0.552
+
+==================================================================
+RUN  test_year=2022  horizon=10j   n_test=1757  pos_rate=0.392
+------------------------------------------------------------------
+baseline classe majoritaire (acc) = 0.6079
+model_lgb              AUC=0.4793  IC95=[0.4526, 0.5069]  p_perm=0.1417
+model_stack            (skip: AttributeError)
+model_xgb              AUC=0.5195  IC95=[0.4917, 0.5480]  p_perm=0.1856
+per-ticker AUC (ensemble, ret_1d) : NVDA=0.402  AMZN=0.403  AAPL=0.407  TSLA=0.423  META=0.435  GOOGL=0.456  MSFT=0.460
+proba_technical_only_2022.parquet sauvegardé (1757 lignes, 31 features techniques)
+
+==================================================================
+RUN  test_year=2023  horizon=10j   n_test=1750  pos_rate=0.683
+------------------------------------------------------------------
+baseline classe majoritaire (acc) = 0.6829
+model_lgb              AUC=0.6081  IC95=[0.5792, 0.6337]  p_perm=0.0020
+model_stack            (skip: AttributeError)
+model_xgb              AUC=0.6440  IC95=[0.6151, 0.6715]  p_perm=0.0020
+per-ticker AUC (ensemble, ret_1d) : META=0.435  NVDA=0.454  GOOGL=0.521  AMZN=0.532  TSLA=0.551  MSFT=0.560  AAPL=0.581
+proba_technical_only.parquet sauvegardé (1750 lignes, 31 features techniques)
+
+==================================================================
+PHASE 2 — RÉGIME 2022 (bear) vs 2023 (bull) — backtest coûts 1 bps
+------------------------------------------------------------------
+2023 (bull, marché +112.3%)
+   A technique       : cum +28.14% | Sharpe 1.55 | CVaR5 -0.0220
+   B tech+sentiment  : cum +2.43% | Sharpe 1.56 | CVaR5 -0.0000
+2022 (BEAR, marché -47.1%)
+   A technique       : cum -74.03% | Sharpe -4.14 | CVaR5 -0.0518
+   B tech+sentiment  : cum -54.97% | Sharpe -2.93 | CVaR5 -0.0487
