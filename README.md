@@ -21,7 +21,7 @@ sentiment_pipeline/
 └── RESULTS.txt      logged metrics for every run (AUC, CIs, ablation, backtest)
 pipeline.ipynb       full pipeline, executed (with cell outputs)
 requirements.txt     dependencies
-figures/             figures 1–10 (fig7 volatility removed)
+figures/             figures 1–9
 ```
 
 ## Canonical metrics (please read)
