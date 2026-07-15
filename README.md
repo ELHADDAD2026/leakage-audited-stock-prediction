@@ -39,7 +39,7 @@ pip install -r requirements.txt
 ```
 
 ## Cite / archive
-Archived on Zenodo: https://doi.org/10.5281/zenodo.20945552
+Archived on Zenodo: https://doi.org/10.5281/zenodo.20945551
 
 ## License
 Code under MIT. Raw third-party text data remain under their providers' licenses.
