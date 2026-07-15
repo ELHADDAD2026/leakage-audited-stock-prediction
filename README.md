@@ -1,4 +1,4 @@
-# A Leakage-Audited, Regime-Robust Protocol for Evaluating Stock-Movement Prediction From Affective Text
+﻿# A Leakage-Audited, Regime-Robust Protocol for Evaluating Stock-Movement Prediction From Affective Text
 
 Reproducibility package for the IEEE Access submission (2026).
 
@@ -43,3 +43,4 @@ Archived on Zenodo: https://doi.org/10.5281/zenodo.20945552
 
 ## License
 Code under MIT. Raw third-party text data remain under their providers' licenses.
+
