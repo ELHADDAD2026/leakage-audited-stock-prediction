@@ -1,0 +1,31 @@
+{
+  "title": "A Leakage-Audited, Regime-Robust Protocol for Evaluating Stock-Movement Prediction From Affective Text",
+  "description": "Reproducibility package for the working paper of the same title. A leakage-audited, regime-stratified evaluation protocol for machine-learning models trained on temporal, class-imbalanced affective-text streams, demonstrated on stock-movement prediction from ~3.06 million cleaned social-media and news messages on seven U.S. mega-cap companies (2015-2023). The concept DOI always resolves to the latest version. The saved JSON/RESULTS artifacts are the single source of truth for all reported figures.",
+  "upload_type": "software",
+  "license": "MIT",
+  "access_right": "open",
+  "creators": [
+    {
+      "name": "El Haddad, Abdelkhaleq",
+      "affiliation": "ENSIAS, Mohammed V University, Rabat, Morocco",
+      "orcid": "0009-0009-8239-1044"
+    },
+    {
+      "name": "Achchab, Said",
+      "affiliation": "ENSIAS, Mohammed V University, Rabat, Morocco"
+    },
+    {
+      "name": "Lahrichi, Younes",
+      "affiliation": "ISCAE Group, Casablanca, Morocco"
+    }
+  ],
+  "keywords": [
+    "financial sentiment analysis",
+    "data leakage",
+    "market regime",
+    "stock-movement prediction",
+    "FinBERT",
+    "placebo test",
+    "reproducibility"
+  ]
+}
